@@ -22,6 +22,10 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(cors());
 
+io.on("connection", client => {
+  console.log("CLient is connect")
+})
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {

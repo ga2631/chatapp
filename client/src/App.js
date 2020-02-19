@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import socket from "./socketHelper"
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to server")
+    })
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
