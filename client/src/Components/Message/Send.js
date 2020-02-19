@@ -15,7 +15,7 @@ const useStyle = makeStyles(() => {
 const Send = () => {
   const classes = useStyle();
 
-  const [message, setMessage] = React.useState()
+  const [message, setMessage] = React.useState("")
 
   const handleChangeMessage = (event) => {
     setMessage(event.target.value)
@@ -23,13 +23,13 @@ const Send = () => {
 
   const handleSendMessage = () => {
     socket.emit("sendMessage", {
-      user: "abc",
-      message: message
+      user: `User ${socket.id}`,
+      content: message
     })
   }
 
   return (
-    <form>
+    <form onSubmit={event => { event.preventDefault(); handleSendMessage() }}>
       <Grid container className={classes.root}>
         <Grid item>
           <TextField id="outlined-basic" variant="outlined" fullWidth defaultValue={message} onChange={handleChangeMessage} />

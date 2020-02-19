@@ -26,7 +26,7 @@ io.on("connection", client => {
   console.log("CLient is connect")
 
   client.on("sendMessage", message => {
-    console.log(message)
+    io.emit("receiveMessage", message)
   })
 })
 
