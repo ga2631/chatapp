@@ -24,6 +24,10 @@ app.use(cors());
 
 io.on("connection", client => {
   console.log("CLient is connect")
+
+  client.on("sendMessage", message => {
+    console.log(message)
+  })
 })
 
 mongoose

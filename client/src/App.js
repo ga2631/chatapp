@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import socket from "./socketHelper";
-import { CssBaseline, Grid, Typography } from "@material-ui/core"
+import { CssBaseline, Grid } from "@material-ui/core"
 import Sidebar from './Components/Sidebar';
 import Message from './Components/Message';
 

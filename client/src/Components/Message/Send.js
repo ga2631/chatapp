@@ -1,8 +1,9 @@
 import React from "react";
 import { Grid, IconButton, TextField, makeStyles } from "@material-ui/core"
 import SendIcon from '@material-ui/icons/Send';
+import socket from "../../socketHelper";
 
-const useStyle = makeStyles(theme => {
+const useStyle = makeStyles(() => {
   return ({
     root: {
       position: "fixed",
@@ -11,20 +12,35 @@ const useStyle = makeStyles(theme => {
   })
 })
 
-const Send = (props) => {
+const Send = () => {
   const classes = useStyle();
 
+  const [message, setMessage] = React.useState()
+
+  const handleChangeMessage = (event) => {
+    setMessage(event.target.value)
+  }
+
+  const handleSendMessage = () => {
+    socket.emit("sendMessage", {
+      user: "abc",
+      message: message
+    })
+  }
+
   return (
-    <Grid container className={classes.root}>
-      <Grid item>
-        <TextField id="outlined-basic" variant="outlined" fullWidth />
+    <form>
+      <Grid container className={classes.root}>
+        <Grid item>
+          <TextField id="outlined-basic" variant="outlined" fullWidth defaultValue={message} onChange={handleChangeMessage} />
+        </Grid>
+        <Grid item>
+          <IconButton color="primary" component="span" onClick={handleSendMessage}>
+            <SendIcon />
+          </IconButton>
+        </Grid>
       </Grid>
-      <Grid item>
-        <IconButton color="primary" aria-label="upload picture" component="span">
-          <SendIcon />
-        </IconButton>
-      </Grid>
-    </Grid>
+    </form>
   )
 }
 
