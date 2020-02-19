@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import socket from "./socketHelper"
+import socket from "./socketHelper";
+import { CssBaseline, Grid, Typography } from "@material-ui/core"
+import Sidebar from './Components/Sidebar';
+import Message from './Components/Message';
 
 const App = () => {
   useEffect(() => {
@@ -12,20 +14,15 @@ const App = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CssBaseline />
+      <Grid container>
+        <Grid item style={{ height: "100vh" }} xs={12} md={3}>
+          <Sidebar />
+        </Grid>
+        <Grid item style={{ height: "100vh" }} xs={12} md={9}>
+          <Message />
+        </Grid>
+      </Grid>
     </div>
   );
 }
