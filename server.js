@@ -5,6 +5,7 @@ const path = require("path");
 const socketIO = require("socket.io");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const _ = require("lodash");
 
 dotenv.config();
 
@@ -23,12 +24,21 @@ if (process.env.NODE_ENV === "production") {
 app.use(cors());
 
 io.on("connection", client => {
-  console.log("CLient is connect")
+  console.log("CLient is connect");
+
+  client.on("join", (account, callback) => {
+    if (!_.isEmpty(account)) {
+      io.emit("joined", account);
+      callback(true);
+    }
+
+    callback(false);
+  });
 
   client.on("sendMessage", message => {
-    io.emit("receiveMessage", message)
-  })
-})
+    io.emit("receiveMessage", message);
+  });
+});
 
 mongoose
   .connect(process.env.MONGO_URI)

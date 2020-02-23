@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
-import './App.css';
+import { BrowserRouter, Router, Switch, Route } from "react-router-dom"
+import { createBrowserHistory } from "history"
+import { CssBaseline } from "@material-ui/core"
 import socket from "./socketHelper";
-import { CssBaseline, Grid } from "@material-ui/core"
-import Sidebar from './Components/Sidebar';
-import Message from './Components/Message';
+import Chat from "./Screen/Chat";
+import Join from "./Screen/Join";
+
+const history = createBrowserHistory();
 
 const App = () => {
   useEffect(() => {
@@ -15,14 +18,18 @@ const App = () => {
   return (
     <div className="App">
       <CssBaseline />
-      <Grid container>
-        <Grid item style={{ height: "100vh" }} xs={12} md={3}>
-          <Sidebar />
-        </Grid>
-        <Grid item style={{ height: "100vh" }} xs={12} md={9}>
-          <Message />
-        </Grid>
-      </Grid>
+      <BrowserRouter>
+        <Router history={history}>
+          <Switch>
+            <Route path="/chat">
+              <Chat />
+            </Route>
+            <Route exac path="/">
+              <Join />
+            </Route>
+          </Switch>
+        </Router>
+      </BrowserRouter>
     </div>
   );
 }
