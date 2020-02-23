@@ -26,9 +26,15 @@ app.use(cors());
 io.on("connection", client => {
   console.log("CLient is connect");
 
+  let clientOnline = [];
+
   client.on("join", (account, callback) => {
     if (!_.isEmpty(account)) {
+      clientOnline.push(account);
+
       io.emit("joined", account);
+      io.emit("onlineAccount", clientOnline);
+
       callback(true);
     }
 

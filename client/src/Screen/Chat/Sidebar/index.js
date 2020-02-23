@@ -1,10 +1,22 @@
 import React from "react";
-import { Typography } from "@material-ui/core"
+import { connect } from "react-redux";
+import { Typography } from "@material-ui/core";
 
-const Sidebar = () => {
+const Sidebar = props => {
   return (
-    <Typography variant="h3">Sidebar</Typography>
-  )
-}
+    <React.Fragment>
+      <Typography variant="h3">Sidebar</Typography>
+      <ul>
+        {props.online.map((item, index) => (
+          <li key={index}>{item.displayName}</li>
+        ))}
+      </ul>
+    </React.Fragment>
+  );
+};
 
-export default Sidebar
+const mapStateToProps = state => ({
+  online: state.online
+});
+
+export default connect(mapStateToProps)(Sidebar);
