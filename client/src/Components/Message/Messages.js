@@ -11,7 +11,6 @@ const Messages = () => {
     });
 
     socket.on("joined", account => {
-      console.log(account);
       setMessages([
         ...messages,
         {

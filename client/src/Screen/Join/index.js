@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { Box, Typography, TextField, Button } from "@material-ui/core";
 import Socket from "../../socketHelper";
 
@@ -15,6 +16,7 @@ const Join = props => {
   const handleJoinChat = () => {
     Socket.emit("join", account, isJoined => {
       if (isJoined) {
+        props.joinChat(account);
         props.history.push("/chat");
       }
     });
@@ -42,4 +44,12 @@ const Join = props => {
   );
 };
 
-export default withRouter(Join);
+const mapDispatchToProps = dispatch => ({
+  joinChat: account =>
+    dispatch({
+      type: "JOIN",
+      payload: account
+    })
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(Join));
