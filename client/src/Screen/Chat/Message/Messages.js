@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
-import socket from "../../socketHelper";
+import socket from "../../../socketHelper";
+import MessageItem from "./ MessageItem";
 
 const Messages = () => {
   const [messages, setMessages] = React.useState([]);
@@ -26,14 +27,11 @@ const Messages = () => {
       <Typography variant="h3" component="h1">
         CHAT APP
       </Typography>
-      <div>
+      <React.Fragment>
         {messages.map((message, index) => (
-          <ol key={index}>
-            <p>{message.user}</p>
-            <p>{message.content}</p>
-          </ol>
+          <MessageItem key={index} message={message} />
         ))}
-      </div>
+      </React.Fragment>
     </React.Fragment>
   );
 };

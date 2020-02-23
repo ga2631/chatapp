@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Grid, IconButton, TextField, makeStyles } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
-import socket from "../../socketHelper";
+import socket from "../../../socketHelper";
 
 const useStyle = makeStyles(() => {
   return {
