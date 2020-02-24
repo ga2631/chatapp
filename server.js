@@ -23,26 +23,28 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(cors());
 
+let clientOnline = [];
+
 io.on("connection", client => {
   console.log("CLient is connect");
 
-  let clientOnline = [];
-
   client.on("join", (account, callback) => {
     if (!_.isEmpty(account)) {
-      clientOnline.push(account);
+      clientOnline.push({ id: client.id, account });
 
+      callback(account);
       io.emit("joined", account);
       io.emit("onlineAccount", clientOnline);
-
-      callback(true);
     }
-
-    callback(false);
+    callback({});
   });
 
   client.on("sendMessage", message => {
     io.emit("receiveMessage", message);
+  });
+
+  client.on("disconnect", () => {
+    console.log("Client is disconnected");
   });
 });
 

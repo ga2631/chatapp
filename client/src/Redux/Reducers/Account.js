@@ -1,12 +1,14 @@
-let Account = {};
+import { Account } from "../Actions/ActionType";
 
-const AccountReducer = (state = Account, action) => {
+const AccountReducer = (state = {}, action) => {
   switch (action.type) {
-    case "JOIN":
+    case Account.join:
       return action.payload;
+    case Account.disjoin:
+      return {};
     default:
       return state;
   }
 };
 
-export default AccountReducer
+export default AccountReducer;

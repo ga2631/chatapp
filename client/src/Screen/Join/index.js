@@ -1,8 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
 import { Box, Typography, TextField, Button } from "@material-ui/core";
-import Socket from "../../socketHelper";
+import { join } from "../../Redux/Actions/Account";
+import { connect } from "react-redux";
+import _ from "lodash";
 
 const Join = props => {
   const [account, setAccount] = React.useState();
@@ -14,13 +15,12 @@ const Join = props => {
   };
 
   const handleJoinChat = () => {
-    Socket.emit("join", account, isJoined => {
-      if (isJoined) {
-        props.joinChat(account);
-        props.history.push("/chat");
-      }
-    });
+    props.join(account);
   };
+
+  React.useEffect(() => {
+    !_.isEmpty(props.account) && props.history.push("/chat");
+  }, [props]);
 
   return (
     <Box>
@@ -44,12 +44,12 @@ const Join = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  joinChat: account =>
-    dispatch({
-      type: "JOIN",
-      payload: account
-    })
+const mapStateToProps = state => ({
+  account: state.account
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(Join));
+const mapDispatchToProps = dispatch => ({
+  join: account => dispatch(join(account))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Join));

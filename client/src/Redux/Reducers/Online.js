@@ -1,12 +1,12 @@
-let Online = [];
+import { Online } from "../Actions/ActionType";
 
-const OnlineReducer = (state = Online, action) => {
+const OnlineReducer = (state = [], action) => {
   switch (action.type) {
-    case "SET_ONLINE":
+    case Online.setOnline:
       return action.payload;
     default:
       return state;
   }
 };
 
-export default OnlineReducer
+export default OnlineReducer;
