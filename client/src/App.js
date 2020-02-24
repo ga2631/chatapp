@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { BrowserRouter, Router, Switch, Route } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import { CssBaseline } from "@material-ui/core";
+import socket from "./socketHelper";
+import Chat from "./Screen/Chat";
+import Join from "./Screen/Join";
 
-function App() {
+const history = createBrowserHistory();
+
+const App = () => {
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to server");
+    });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CssBaseline />
+      <BrowserRouter>
+        <Router history={history}>
+          <Switch>
+            <Route path="/chat">
+              <Chat />
+            </Route>
+            <Route exac path="/">
+              <Join />
+            </Route>
+          </Switch>
+        </Router>
+      </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;
